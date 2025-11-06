@@ -21,4 +21,20 @@ pipeline {
             }
         }
     }
+    post{
+        sucess{
+            emailexit(
+                to: 'mrswain0806@gmail.com",
+                subject: 'Jenkins Job Success - Web01',
+                body: 'The Jenkins job has completed successfully.'
+            )
+        }
+        failure{
+            emailexit(
+                to: 'mrswain0806@gmail.com",
+                subject: 'Jenkins Job Failure - Web01',
+                body: 'The Jenkins job has failed. Please check the console output for details.'
+            )
+        }
+    }
 }
