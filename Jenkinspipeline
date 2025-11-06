@@ -23,14 +23,14 @@ pipeline {
     }
     post{
         success{
-            emailexit(
+            emailext(
                 to: 'mrswain0806@gmail.com',
                 subject: 'Jenkins Job Success - Web01',
                 body: 'The Jenkins job has completed successfully.'
             )
         }
         failure{
-            emailexit(
+            emailext(
                 to: 'mrswain0806@gmail.com',
                 subject: 'Jenkins Job Failure - Web01',
                 body: 'Build fail.'
