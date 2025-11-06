@@ -22,15 +22,15 @@ pipeline {
             }
         }
     }
-    post{
-        success{
+    post {
+        success {
             emailext(
                 to: 'mrswain0806@gmail.com',
                 subject: 'Jenkins Job Success - Web01',
                 body: 'The Jenkins job has completed successfully.'
             )
         }
-        failure{
+        failure {
             emailext(
                 to: 'mrswain0806@gmail.com',
                 subject: 'Jenkins Job Failure - Web01',
