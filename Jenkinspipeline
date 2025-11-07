@@ -1,12 +1,23 @@
 pipeline {
     agent any
 
+    environment {
+    RECIPIENT = "yourmailmrswain0608@gmail.com"
+  }
+
     stages {
         stage('Git-checkout ') {
             steps {
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/prudhvisurya996/JavaWebCalculator.git']])
             }
         }
+        stage('Send Mail After Checkout') {
+            steps {
+             mail to: RECIPIENT,
+                  subject: "Pipeline Started: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                  body: "Checkout done. Pipeline started.\nConsole: ${env.BUILD_URL}console"
+      }
+    }
         stage('Package') {
             steps {
                 sh 'mvn package'
@@ -26,15 +37,15 @@ pipeline {
         success {
             emailext(
                 to: 'mrswain0806@gmail.com',
-                subject: 'Jenkins Job Success - Web01',
+                subject: 'Jenkins Job Success - Web01 ${env.JOB_NAME} #${env.BUILD_NUMBER}',
                 body: 'The Jenkins job has completed successfully.'
             )
         }
         failure {
             emailext(
                 to: 'mrswain0806@gmail.com',
-                subject: 'Jenkins Job Failure - Web01',
-                body: 'Build fail.'
+                subject: 'Jenkins Job Failure - Web01${env.JOB_NAME} #${env.BUILD_NUMBER}',
+                body: 'Build fail. Check console: ${env.BUILD_URL}console'
             )
         }
     }
